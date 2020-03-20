@@ -1,0 +1,5 @@
+numpy
+matplotlib
+ase
+ipywidgets
+itertools
