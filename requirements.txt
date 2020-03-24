@@ -4,4 +4,5 @@ ase
 ipywidgets==7.5.0
 appmode==0.6.0
 tqdm
+nglview
 
