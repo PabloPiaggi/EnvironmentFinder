@@ -36,9 +36,9 @@ By default the *Choose* option allows the user to select from some examples.
 These examples are useful to play with and get a grasp of the tool.
 The *Upload* option should be used to analyze a configuration stored in the user's hard drive.
 Once a configuration file has been uploaded the user can switch to the *Choose* option and the file should appear in the dropdown choices.
-Any configuration supported by the ASE library can be used.
+Any file format supported by the ASE library can be used.
 A complete list can be found [here](https://wiki.fysik.dtu.dk/ase/ase/io/io.html).
-ASE determines the file type by its extension so be sure to name the file properly!
+ASE determines the file format by its extension so be sure to name the file properly!
 
 ### Define environments
 The *Define environments* tab is where the user defines the environments.
@@ -75,11 +75,14 @@ The *Output environments* tab prints the environments in Protein Data Bank (PDB)
 One can toggle between the *Unique* environments and *All* of them. 
 Bear in mind that you might need to toggle between these options to refresh the results.
 
-There is a slide bar to select the environment to visualize.
-
 ## Acknowledgments
 
-The app uses several python libraries, for instance [ASE](https://wiki.fysik.dtu.dk/ase/) and [NGLVIEW](https://github.com/arose/nglview).
-I am grateful to Giovanni Pizzi and Dou Du for suggesting to deploy the tool using [Binder](https://mybinder.org/)+[appmode](https://github.com/oschuett/appmode).
-This tool was developed with support of the Swiss National Science Foundation (SNSF) through an Early Postdoc.Mobility fellowship.
-I also acknowledge funding from the NCCR MARVEL funded by the SNSF and from the CSI Computational Science Center funded by the Department of Energy of the USA.
+* The app uses several python libraries, for instance [ASE](https://wiki.fysik.dtu.dk/ase/) and [NGLVIEW](https://github.com/arose/nglview).
+* I am grateful to Giovanni Pizzi and Dou Du for suggesting to deploy the tool using [Binder](https://mybinder.org/)+[appmode](https://github.com/oschuett/appmode).
+* This tool was developed with support of the Swiss National Science Foundation (SNSF) through an Early Postdoc.Mobility fellowship.
+* I also acknowledge funding from the NCCR MARVEL funded by the SNSF and from the CSI Computational Science Center funded by the Department of Energy of the USA.
+
+## How to cite
+
+If you are using this tool to find environments for enhanced sampling simulations please read and cite:
+* [Pablo Piaggi and Michele Parrinello, *Calculation of phase diagrams in the multithermal-multibaric ensemble*, J. Chem. Phys. 150, 244119 (2019)](https://aip.scitation.org/doi/full/10.1063/1.5102104)
