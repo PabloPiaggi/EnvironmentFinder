@@ -1,8 +1,6 @@
-numpy
-matplotlib
-ase
+numpy==1.18.2
+ase==3.19.0
 ipywidgets==7.5.0
 appmode==0.6.0
-tqdm
-nglview
-
+tqdm==4.43.0
+nglview=2.7.5
