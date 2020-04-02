@@ -2,7 +2,7 @@
 
 A tool for finding and analyzing atomic environments in crystal structures.
 
-Launch the app! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FEnvironmentFinder.ipynb)
+Launch the app! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FApp.ipynb)
 
 ## Purpose
 
