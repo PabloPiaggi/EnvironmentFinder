@@ -3,4 +3,4 @@ ase==3.19.0
 ipywidgets==7.5.0
 appmode==0.6.0
 tqdm==4.43.0
-nglview=2.7.5
+nglview==2.7.5
