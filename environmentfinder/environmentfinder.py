@@ -1,8 +1,8 @@
 import numpy as np
 from ipywidgets import widgets
 import ase
-import ase.io as aseio
-import ase.neighborlist as asenl
+import ase.io
+import ase.neighborlist
 from itertools import permutations
 from tqdm.notebook import tqdm, trange
 import nglview
@@ -17,6 +17,7 @@ class Environments:
         self.indeces = np.array([],dtype=np.int)
         self.delta = np.array([])
         self.distance =  np.array([])
+
 
 # Class to find environments
 class EnvironmentFinder:
@@ -35,6 +36,8 @@ class EnvironmentFinder:
         # self.tolerance is the tolerance to determine if two elements of the
         # distance vectors are the same
         self.tolerance=0
+        # self.atom_types contains the unique atom types
+        self.atom_types = np.empty(1)
         #env=Environments()
         #env.delta.shape = (0,3)
         #uniqueEnvs = np.append(uniqueEnvs,env)
@@ -63,7 +66,7 @@ class EnvironmentFinder:
             no value
         """
 
-        self.conf = aseio.read(filename)
+        self.conf = ase.io.read(filename)
         self.atom_types = np.unique(self.conf.get_chemical_symbols())
 
     def chooseAndPlotConfiguration(self,filename):
@@ -98,7 +101,7 @@ class EnvironmentFinder:
         # Find all environments
         # Loop over input particles of type atom_type_1:
         myindeces=lista
-        nl = asenl.NeighborList((cutoff/2.0)*np.ones(self.conf.get_number_of_atoms()),skin=0.1,bothways=True)
+        nl = ase.neighborlist.NeighborList((cutoff/2.0)*np.ones(self.conf.get_number_of_atoms()),skin=0.1,bothways=True)
         nl.update(self.conf)
         mat = self.conf.get_cell()
         for index in myindeces:
@@ -220,7 +223,15 @@ class EnvironmentFinder:
 
     def printEnvironmentSummaryInfo(self,Environments):
         num_of_templates=Environments.shape[0]
-        print("Found " + str(num_of_templates) + " environments")
+        if (num_of_templates>0):
+            avg_num_neighbors = 0.0
+            for i in range(num_of_templates):
+                avg_num_neighbors += Environments[i].indeces.shape[0]
+            avg_num_neighbors /= num_of_templates
+        else:
+            avg_num_neighbors = 0
+
+        print("Found " + str(num_of_templates) + " environments each with " + str(int(avg_num_neighbors))  + " neighbors on average")
 
     def printEnvironments(self,Environments):
         # Print C++ syntax or plumed input syntax
@@ -229,7 +240,7 @@ class EnvironmentFinder:
             env_atom_types = np.asarray(self.conf.get_chemical_symbols())[Environments[i].indeces.astype(int)]
             env_positions = Environments[i].delta*10
             env = ase.Atoms(env_atom_types,env_positions)
-            aseio.write('-', env, format='proteindatabank')
+            ase.io.write('-', env, format='proteindatabank')
 
 
     def plotEnv(self,myEnvironment):
