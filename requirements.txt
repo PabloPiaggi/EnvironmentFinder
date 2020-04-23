@@ -4,3 +4,4 @@ ipywidgets==7.5.0
 appmode==0.6.0
 tqdm==4.43.0
 nglview==2.7.5
+markdown==3.2.1
