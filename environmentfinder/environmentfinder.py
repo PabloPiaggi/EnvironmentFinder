@@ -68,7 +68,17 @@ class EnvironmentFinder:
             no value
         """
 
-        self.conf = ase.io.read(filename)
+        extension = filename.split(".")[1]
+        if (extension=="lammps-data"):
+            try: 
+                self.conf = ase.io.read(filename,style="atomic")
+            except:
+                try: 
+                    self.conf = ase.io.read(filename,style="full")
+                except:
+                    print("Error: Could not load the lammps-data file")
+        else:
+            self.conf = ase.io.read(filename)
         self.atom_types = np.unique(self.conf.get_chemical_symbols())
         self.atom_types = np.append(self.atom_types,"Any")
 
