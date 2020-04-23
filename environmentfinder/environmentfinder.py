@@ -70,6 +70,7 @@ class EnvironmentFinder:
 
         self.conf = ase.io.read(filename)
         self.atom_types = np.unique(self.conf.get_chemical_symbols())
+        self.atom_types = np.append(self.atom_types,"Any")
 
     def chooseAndPlotConfiguration(self,filename):
         """ Choose and plot configuration by filename
@@ -285,6 +286,10 @@ class EnvironmentFinder:
         chemical_symbols = np.asarray(self.conf.get_chemical_symbols())
         lista=np.argwhere(chemical_symbols == atom_type_1).flatten()
         listb=np.argwhere(chemical_symbols == atom_type_2).flatten()
+        if (atom_type_1=="Any"):
+            lista=np.linspace(0,chemical_symbols.shape[0]-1,chemical_symbols.shape[0]).astype(int)
+        if (atom_type_2=="Any"):
+            listb=np.linspace(0,chemical_symbols.shape[0]-1,chemical_symbols.shape[0]).astype(int)
         self.calculateEnvironments(lista,listb,cutoff)
         if (self.uniqueFlag and not(self.fastFlag)):
             self.CalculateUniqueEnvironments()
@@ -313,7 +318,6 @@ class EnvironmentFinder:
         self.tolerance=tolerance
         lista=np.arange(int(mina),int(maxa)+1,int(stridea))-1
         listb=np.arange(int(minb),int(maxb)+1,int(strideb))-1
-        #print(lista,listb)
         self.calculateEnvironments(lista,listb,cutoff)
         if (self.uniqueFlag and not(self.fastFlag)):
             self.CalculateUniqueEnvironments()
