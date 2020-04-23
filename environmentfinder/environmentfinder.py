@@ -255,7 +255,7 @@ class EnvironmentFinder:
 
     def plotEnv(self,myEnvironment):
         env_atom_types = np.asarray(self.conf.get_chemical_symbols())[myEnvironment.indeces.astype(int)] #,np.array('C')] #Template[env_number].myindex)]
-        env_atom_types = np.append(env_atom_types,np.array('Si'))
+        env_atom_types = np.append(env_atom_types,np.asarray(self.conf.get_chemical_symbols())[myEnvironment.myindex])
         env_positions = np.vstack((myEnvironment.delta*10,np.array([0,0,0]) ) )
         env = ase.Atoms(env_atom_types,env_positions)
         v = nglview.show_ase(env)
