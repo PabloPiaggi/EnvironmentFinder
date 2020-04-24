@@ -203,12 +203,20 @@ class EnvironmentFinder:
         for i in range(num_of_templates):
             sortindeces=np.argsort(self.allEnvs[i].delta[:,0]+self.allEnvs[i].delta[:,1]+self.allEnvs[i].delta[:,2],kind='stable')
             self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
+            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
+            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
             sortindeces=np.argsort(self.allEnvs[i].delta[:,2],kind='stable')
             self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
+            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
+            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
             sortindeces=np.argsort(self.allEnvs[i].delta[:,1],kind='stable')
             self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
+            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
+            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
             sortindeces=np.argsort(self.allEnvs[i].delta[:,0],kind='stable')
             self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
+            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
+            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
         flag_unique=np.ones(num_of_templates)
         same_as=np.linspace(0,num_of_templates-1,num_of_templates)
         # Disregard empty environments
