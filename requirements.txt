@@ -1,5 +1,5 @@
 numpy==1.18.2
-ase==3.19.1
+ase==3.20.1
 ipywidgets==7.5.0
 appmode==0.6.0
 tqdm==4.43.0
