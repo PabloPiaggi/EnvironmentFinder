@@ -131,19 +131,15 @@ class EnvironmentFinder:
             self.allEnvs = np.append(self.allEnvs,Environment)
 
     def CalculateUniqueEnvironments(self):
-        """ Calculate unique Environments in a smart way?
+        """ Calculate unique Environments
 
-        This algorithm to calculate unique environments compares all possible
-        permutations of the environments. However, it discard entire sets of
+        This algorithm calculates unique environments by comparing all possible
+        permutations of the environments. However, it discards entire sets of
         permutations if it is found that there is no possibility of match.
-        It is thus always correct but slower than the fast version.
 
         The number of operations scales roughly as as N^2*(\sum_{i=1}^M M+1-i)
         where N is the total number of environments and M is the number of i
         atoms in the environments.
-
-        CalculateUniqueEnvironmentsFast is a faster alternative to this
-        function.
 
         Args:
             none
@@ -159,11 +155,9 @@ class EnvironmentFinder:
         for i in range(num_of_templates):
             if (self.allEnvs[i].indeces.shape[0]==0):
                 flag_unique[i]=0
-        #for i in range(num_of_templates): #,desc="Environment 1", leave=False):
-        for i in trange(num_of_templates,desc="Environment 1", leave=False):
+        for i in trange(num_of_templates,desc="Progress", leave=False):
             if ( self.allEnvs[i].indeces.shape[0]>0 and flag_unique[i]==1):
-                #for j in range(i+1,num_of_templates):
-                for j in trange(i+1,num_of_templates,desc="Environment 2", leave=False):
+                for j in range(i+1,num_of_templates):
                     # Not empty,  unique, and same number of neighbors
                     if ( self.allEnvs[j].indeces.shape[0]>0 and flag_unique[j]==1 and self.allEnvs[i].indeces.shape[0]==self.allEnvs[j].indeces.shape[0]):
                         atom_match = np.zeros(self.allEnvs[j].indeces.shape[0])

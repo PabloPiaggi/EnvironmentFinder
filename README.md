@@ -15,9 +15,7 @@ The tool can also be used to visualize chemical environments around an atom for 
 
 * Choose from the examples or upload your own configuration.
 * Determine unique environments in crystal structures. Generally, these environments correspond to the *basis* of the crystal structure.
-* Two algorithms for finding unique environments are available.
-	* A sorting algorithm that is fast but in some pathological cases can be wrong.
-	* A permutation algorithm that is slow but always gives correct results. My advice is to use the fast version and change to the slow one if the algorithm finds more unique environments than expected.
+* An algorithm to find unique environments is used.
 * Visualize the environments.
 * Output the environments in Protein Data Bank (pdb) format.
 
@@ -53,8 +51,6 @@ For this purpose it compares all environments and keeps only the ones that are d
 Two environments are considered equal if the distance of every neighboring atom differs by less than some tolerance.
 The tolerance is specified in the *Tolerance (Å):* box.
 In order to compare environments, all permutations of the atoms have to be considered and that calculation can be slow.
-The *Fast algorithm* checkbox switches between a sorting algorithm that is fast but in some pathological cases can be wrong, and a permutation algorithm that is slow but always gives correct results.
-My advice is to use the fast version and change to the slow one if the algorithm finds more unique environments than expected.
 
 When the calculation has finished the app prints the number of environments that have been found and the average number of neighbors in the environments.
 
@@ -70,7 +66,7 @@ There is a slide bar to select the environment to visualize.
 ### Output environments
 The *Output environments* tab prints the environments in Protein Data Bank (PDB) format.
 One can toggle between the *Unique* environments and *All* of them.
-There is a slide bar to select the environment to visualize.
+The environments can be downloaded in a zip file.
 
 ## Acknowledgments
 
