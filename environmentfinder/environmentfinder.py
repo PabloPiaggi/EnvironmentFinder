@@ -6,6 +6,10 @@ import ase.neighborlist
 from itertools import permutations
 from tqdm.notebook import tqdm, trange
 import nglview
+from IPython.display import display, FileLink
+from zipfile import ZipFile
+import os
+import glob
 
 import warnings
 warnings.simplefilter('ignore')
@@ -312,7 +316,6 @@ class EnvironmentFinder:
         print("Found " + str(num_of_templates) + " unique environments each with " + str(int(avg_num_neighbors))  + " neighbors on average")
 
     def printEnvironments(self,Environments):
-        # Print C++ syntax or plumed input syntax
         num_of_templates=Environments.shape[0]
         for i in range(num_of_templates):
             env_atom_types = np.asarray(self.conf.get_chemical_symbols())[Environments[i].indeces.astype(int)]
@@ -320,6 +323,24 @@ class EnvironmentFinder:
             env = ase.Atoms(env_atom_types,env_positions)
             ase.io.write('-', env, format='proteindatabank')
 
+
+    def printEnvironmentsToFile(self,Environments):
+        num_of_templates=Environments.shape[0]
+        zipObj = ZipFile('Download/download.zip', 'w')
+        for i in range(num_of_templates):
+            env_atom_types = np.asarray(self.conf.get_chemical_symbols())[Environments[i].indeces.astype(int)]
+            env_positions = Environments[i].delta*10
+            env = ase.Atoms(env_atom_types,env_positions)
+            fileName="Download/env" + str(i+1) + ".pdb"
+            ase.io.write(fileName, env, format='proteindatabank')
+            zipObj.write(fileName)
+        zipObj.close()
+        local_file = FileLink('Download/download.zip', result_html_prefix="Click here to download the environments in PDB format: ")
+        display(local_file)
+        fileList = glob.glob('Download/env*')
+        for filePath in fileList:
+            os.remove(filePath)
+    
 
     def plotEnv(self,myEnvironment):
         env_atom_types = np.asarray(self.conf.get_chemical_symbols())[myEnvironment.indeces.astype(int)] #,np.array('C')] #Template[env_number].myindex)]
