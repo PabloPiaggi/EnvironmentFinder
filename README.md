@@ -2,6 +2,8 @@
 
 A tool for finding and analyzing atomic environments in crystal structures.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4746325.svg)](https://doi.org/10.5281/zenodo.4746325)
+
 Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FApp.ipynb)
 
 ## Purpose
@@ -78,4 +80,5 @@ The environments can be downloaded in a zip file.
 ## How to cite
 
 If you are using this tool to find environments for enhanced sampling simulations please read and cite:
+* [Pablo Piaggi, *Environment finder: A tool for finding and analyzing atomic environments in crystal structures*, Zenodo (2021)](https://doi.org/10.5281/zenodo.4746324)
 * [Pablo Piaggi and Michele Parrinello, *Calculation of phase diagrams in the multithermal-multibaric ensemble*, J. Chem. Phys. 150, 244119 (2019)](https://aip.scitation.org/doi/full/10.1063/1.5102104)
