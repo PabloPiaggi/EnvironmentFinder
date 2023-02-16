@@ -42,6 +42,9 @@ class EnvironmentFinder:
         # self.tolerance is the tolerance to determine if two elements of the
         # distance vectors are the same
         self.tolerance=0
+	# self.min_degeneracy is the minimum degeneracy allowed for unique
+	# environments
+	self.min_degeneracy=0
         # self.atom_types contains the unique atom types
         self.atom_types = np.empty(1)
         #env=Environments()
@@ -229,9 +232,10 @@ class EnvironmentFinder:
         self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
         self.degeneracy = np.ndarray((0,),dtype=np.object)
         for i in range(num_of_templates):
-            if (flag_unique[i]==1):
+            degeneracy_i=np.sum(np.ones(num_of_templates)[same_as==i])
+            if (flag_unique[i]==1 and degeneracy_i>self.min_degeneracy):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
-                self.degeneracy = np.append(self.degeneracy,np.sum(np.ones(num_of_templates)[same_as==i]))
+                self.degeneracy = np.append(self.degeneracy,degeneracy_i)
 
     def CalculateUniqueEnvironmentsFast(self):
         """ Calculate unique Environments
@@ -294,9 +298,10 @@ class EnvironmentFinder:
         self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
         self.degeneracy = np.ndarray((0,),dtype=np.object)
         for i in range(num_of_templates):
-            if (flag_unique[i]==1):
+            degeneracy_i=np.sum(np.ones(num_of_templates)[same_as==i])
+            if (flag_unique[i]==1 and degeneracy_i>self.min_degeneracy):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
-                self.degeneracy = np.append(self.degeneracy,np.sum(np.ones(num_of_templates)[same_as==i]))
+                self.degeneracy = np.append(self.degeneracy,degeneracy_i)
 
     def printEnvironmentSummaryInfo(self,Environments):
         num_of_templates=Environments.shape[0]
@@ -364,8 +369,9 @@ class EnvironmentFinder:
         else:
             print("Error")
 
-    def calculateEnvironmentsType(self,atom_type_1,atom_type_2,cutoff,tolerance):
+    def calculateEnvironmentsType(self,atom_type_1,atom_type_2,cutoff,tolerance,min_degeneracy):
         self.tolerance=tolerance
+	self.min_degeneracy=min_degeneracy
         chemical_symbols = np.asarray(self.conf.get_chemical_symbols())
         lista=np.argwhere(chemical_symbols == atom_type_1).flatten()
         listb=np.argwhere(chemical_symbols == atom_type_2).flatten()
@@ -383,8 +389,9 @@ class EnvironmentFinder:
         else:
             self.printEnvironmentSummaryInfo(self.globalTemplate)
 
-    def calculateEnvironmentsString(self,listastring,listbstring,cutoff,tolerance):
+    def calculateEnvironmentsString(self,listastring,listbstring,cutoff,tolerance,min_degeneracy):
         self.tolerance=tolerance
+	self.min_degeneracy=min_degeneracy
         lista=np.fromstring(listastring, dtype=int, sep=',')-1
         listb=np.fromstring(listbstring, dtype=int, sep=',')-1
         self.calculateEnvironments(lista,listb,cutoff)
@@ -397,8 +404,9 @@ class EnvironmentFinder:
         else:
             self.printEnvironmentSummaryInfo(self.allEnvs)
 
-    def calculateEnvironmentsMinMaxStride(self,mina,maxa,stridea,minb,maxb,strideb,cutoff,tolerance):
+    def calculateEnvironmentsMinMaxStride(self,mina,maxa,stridea,minb,maxb,strideb,cutoff,tolerance,min_degeneracy):
         self.tolerance=tolerance
+	self.min_degeneracy=min_degeneracy
         lista=np.arange(int(mina),int(maxa)+1,int(stridea))-1
         listb=np.arange(int(minb),int(maxb)+1,int(strideb))-1
         self.calculateEnvironments(lista,listb,cutoff)
