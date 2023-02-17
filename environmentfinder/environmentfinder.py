@@ -44,6 +44,9 @@ class EnvironmentFinder:
         self.tolerance=0
         # self.atom_types contains the unique atom types
         self.atom_types = np.empty(1)
+        # Max number of neighbors in environment
+        self.max_neighbors=1
+        self.max_neighbors_flag=False
         #env=Environments()
         #env.delta.shape = (0,3)
         #uniqueEnvs = np.append(uniqueEnvs,env)
@@ -89,6 +92,10 @@ class EnvironmentFinder:
         self.chooseConfiguration(filename)
         self.plotConf()
 
+    def setMaximumNumberOfNeighbors(self,max_neighbors):
+        self.max_neighbors_flag = True
+        self.max_neighbors = max_neighbors
+
     def calculateEnvironments(self,lista,listb,cutoff):
         """ Find environments
 
@@ -128,7 +135,19 @@ class EnvironmentFinder:
                             Environment.delta = np.append(Environment.delta,np.array([[delta[0]/mat[0][0], delta[1]/mat[1][1], delta[2]/mat[2][2]]]),axis=0)
                         Environment.distance = np.append(Environment.distance,distance)
                         Environment.indeces = np.append(Environment.indeces,neigh)
+            # Use maximum number of neighbors
+            if (self.max_neighbors_flag==True):
+                 # Sort
+                 sortindeces=np.argsort(Environment.distance,kind='stable')
+                 Environment.delta =    Environment.delta[sortindeces,:]
+                 Environment.distance = Environment.distance[sortindeces]
+                 Environment.indeces =  Environment.indeces[sortindeces]
+                 # Choose first max_neighbors
+                 Environment.delta =    Environment.delta[:self.max_neighbors,:]
+                 Environment.distance = Environment.distance[:self.max_neighbors]
+                 Environment.indeces =  Environment.indeces[:self.max_neighbors]
             self.allEnvs = np.append(self.allEnvs,Environment)
+
 
     def CalculateUniqueEnvironments(self):
         """ Calculate unique Environments
