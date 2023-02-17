@@ -21,6 +21,8 @@ class Environments:
         self.indeces = np.array([],dtype=np.int)
         self.delta = np.array([])
         self.distance =  np.array([])
+        # degeneracy defaults to 1 and is different from 1 for unique environments
+        self.degeneracy = 1
 
 
 # Class to find environments
@@ -37,8 +39,6 @@ class EnvironmentFinder:
         self.allEnvs=np.ndarray((0,),dtype=np.object)
         # self.uniqueEnvs stores the unique environments
         self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
-        # self.degeneracy is the degeneracy of the unique environments
-        self.degeneracy = np.ndarray((0,),dtype=np.object)
         # self.tolerance is the tolerance to determine if two elements of the
         # distance vectors are the same
         self.tolerance=0
@@ -177,12 +177,10 @@ class EnvironmentFinder:
                             same_as[j] = i
                             #break
         self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
-        self.degeneracy = np.ndarray((0,),dtype=np.object)
         for i in range(num_of_templates):
             if (flag_unique[i]==1):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
-                self.degeneracy = np.append(self.degeneracy,np.sum(np.ones(num_of_templates)[same_as==i]))
-
+                self.uniqueEnvs[-1].degeneracy = np.sum(np.ones(num_of_templates)[same_as==i])
 
     def CalculateUniqueEnvironmentsOld(self):
         """ Calculate unique Environments
@@ -227,11 +225,10 @@ class EnvironmentFinder:
                                 same_as[j] = i
                                 break
         self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
-        self.degeneracy = np.ndarray((0,),dtype=np.object)
         for i in range(num_of_templates):
             if (flag_unique[i]==1):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
-                self.degeneracy = np.append(self.degeneracy,np.sum(np.ones(num_of_templates)[same_as==i]))
+                self.uniqueEnvs[-1].degeneracy = np.sum(np.ones(num_of_templates)[same_as==i])
 
     def CalculateUniqueEnvironmentsFast(self):
         """ Calculate unique Environments
@@ -292,11 +289,10 @@ class EnvironmentFinder:
                             flag_unique[j]=0
                             same_as[j] = i
         self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
-        self.degeneracy = np.ndarray((0,),dtype=np.object)
         for i in range(num_of_templates):
             if (flag_unique[i]==1):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
-                self.degeneracy = np.append(self.degeneracy,np.sum(np.ones(num_of_templates)[same_as==i]))
+                self.uniqueEnvs[-1].degeneracy = np.sum(np.ones(num_of_templates)[same_as==i])
 
     def printEnvironmentSummaryInfo(self,Environments):
         num_of_templates=Environments.shape[0]
@@ -307,7 +303,10 @@ class EnvironmentFinder:
             avg_num_neighbors /= num_of_templates
         else:
             avg_num_neighbors = 0
-        print("Found " + str(num_of_templates) + " unique environments each with " + str(int(avg_num_neighbors))  + " neighbors on average")
+        print("Found " + str(num_of_templates) + " environments each with " + str(int(avg_num_neighbors))  + " neighbors on average")
+        if (num_of_templates>0):
+            for i in range(num_of_templates):
+                print("Environment " + str(int(i+1)) + ": degeneracy = " + str(int(Environments[i].degeneracy)) + " - number of neighbors = ", str(int(Environments[i].indeces.shape[0])) )
 
     def printEnvironments(self,Environments):
         num_of_templates=Environments.shape[0]
@@ -354,7 +353,8 @@ class EnvironmentFinder:
     def chooseEnvPlotUnique(self,number):
         if (self.uniqueEnvs.shape[0]>0):
             self.plotEnv(self.uniqueEnvs[number-1])
-            print("Degeneracy of the environment is " + str(int(self.degeneracy[number-1])) )
+            print("Degeneracy of the environment is " + str(int(self.uniqueEnvs[number-1].degeneracy)) )
+            print("Number of neighbors in the environment is " + str(int(self.uniqueEnvs[number-1].indeces.shape[0])) )
 
     def chooseEnvPlot(self,number):
         if (self.uniqueFlag and self.uniqueEnvs.shape[0]>0):
