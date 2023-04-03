@@ -4,8 +4,22 @@ A tool for finding and analyzing atomic environments in crystal structures.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4746325.svg)](https://doi.org/10.5281/zenodo.4746325)
 
+## Use the tool online with Binder
+
 <!-- Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FApp.ipynb) -->
 Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?filepath=App.ipynb)
+
+## Run locally
+
+You can run the app locally with conda and the following commands:
+```
+conda create --name env_finder python=3.8 anaconda
+conda activate env_finder
+pip install -r requirements.txt
+bash postBuild
+jupyter-notebook App.ipynb
+```
+Once the jupyter notebook opens in your browser, click on "Appmode", and start using the tool.
 
 ## Purpose
 
