@@ -13,6 +13,8 @@ Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybind
 
 You can run the app locally with conda and the following commands:
 ```
+git clone https://github.com/PabloPiaggi/EnvironmentFinder EnvironmentFinder
+cd EnvironmentFinder
 conda create --name env_finder python=3.8 anaconda
 conda activate env_finder
 pip install -r requirements.txt
