@@ -4,7 +4,8 @@ A tool for finding and analyzing atomic environments in crystal structures.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4746325.svg)](https://doi.org/10.5281/zenodo.4746325)
 
-Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FApp.ipynb)
+<!-- Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FApp.ipynb) -->
+Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?filepath=App.ipynb)
 
 ## Purpose
 
