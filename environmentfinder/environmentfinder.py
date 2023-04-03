@@ -347,7 +347,7 @@ class EnvironmentFinder:
 
     def printEnvironmentsToZipFile(self,Environments):
         num_of_templates=Environments.shape[0]
-        os.mkdir("Download")
+        #os.mkdir("Download")
         zipObj = ZipFile('Download/download.zip', 'w')
         for i in range(num_of_templates):
             env_atom_types = np.asarray(self.conf.get_chemical_symbols())[Environments[i].indeces.astype(int)]
