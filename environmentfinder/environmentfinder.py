@@ -18,7 +18,7 @@ warnings.simplefilter('ignore')
 class Environments:
     def __init__(self):
         self.myindex = -1
-        self.indeces = np.array([],dtype=np.int)
+        self.indeces = np.array([],dtype=int)
         self.delta = np.array([])
         self.distance =  np.array([])
         # degeneracy defaults to 1 and is different from 1 for unique environments
@@ -36,9 +36,9 @@ class EnvironmentFinder:
         # self.fastFlag is True if the fast algorithm is to be employed
         self.fastFlag=True
         # self.allEnvs stores all calculated environments
-        self.allEnvs=np.ndarray((0,),dtype=np.object)
+        self.allEnvs=np.ndarray((0,),dtype=object)
         # self.uniqueEnvs stores the unique environments
-        self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
+        self.uniqueEnvs = np.ndarray((0,),dtype=object)
         # self.tolerance is the tolerance to determine if two elements of the
         # distance vectors are the same
         self.tolerance=0
@@ -111,7 +111,7 @@ class EnvironmentFinder:
             no value
         """
 
-        self.allEnvs = np.ndarray((0,),dtype=np.object)
+        self.allEnvs = np.ndarray((0,),dtype=object)
         # Find all environments
         # Loop over input particles of type atom_type_1:
         myindeces=lista
@@ -195,7 +195,7 @@ class EnvironmentFinder:
                             flag_unique[j]=0
                             same_as[j] = i
                             #break
-        self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
+        self.uniqueEnvs = np.ndarray((0,),dtype=object)
         for i in range(num_of_templates):
             if (flag_unique[i]==1):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
@@ -243,7 +243,7 @@ class EnvironmentFinder:
                                 flag_unique[j]=0
                                 same_as[j] = i
                                 break
-        self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
+        self.uniqueEnvs = np.ndarray((0,),dtype=object)
         for i in range(num_of_templates):
             if (flag_unique[i]==1):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
@@ -307,7 +307,7 @@ class EnvironmentFinder:
                         if (np.count_nonzero(np.isclose(self.allEnvs[i].delta,self.allEnvs[j].delta,atol=self.tolerance))==self.allEnvs[i].indeces.shape[0]*3 ):
                             flag_unique[j]=0
                             same_as[j] = i
-        self.uniqueEnvs = np.ndarray((0,),dtype=np.object)
+        self.uniqueEnvs = np.ndarray((0,),dtype=object)
         for i in range(num_of_templates):
             if (flag_unique[i]==1):
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
