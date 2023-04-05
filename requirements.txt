@@ -1,6 +1,6 @@
 numpy
 ase
-ipywidgets
+ipywidgets==7.*
 voila
 tqdm
 nglview
