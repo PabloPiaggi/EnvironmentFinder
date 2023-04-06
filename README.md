@@ -7,7 +7,7 @@ A tool for finding and analyzing atomic environments in crystal structures.
 ## Use the tool online with Binder
 
 <!-- Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FApp.ipynb) -->
-Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?filepath=App.ipynb)
+Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/voila-test?urlpath=voila%2Frender%2FApp.ipynb)
 
 ## Run locally
 
