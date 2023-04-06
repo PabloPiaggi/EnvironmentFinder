@@ -1,7 +1,7 @@
 numpy
 ase
 ipywidgets==7.*
-voila=0.3.*
+voila==0.3.*
 tqdm
 nglview
 markdown
