@@ -1,0 +1,3 @@
+include logo*.png
+include Examples/*
+include App.ipynb

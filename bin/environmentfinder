@@ -1,0 +1,5 @@
+#!/bin/bash
+
+location=`pip show environmentfinder | grep "Location" | awk '{print $2}'`
+
+voila $location/App.ipynb
