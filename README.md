@@ -1,4 +1,4 @@
-# <img src="https://github.com/PabloPiaggi/EnvironmentFinder/raw/master/logo-notext.png" width="64" valign="middle" alt="EnviornmentFinder"/> Environment finder
+# <img src="https://github.com/PabloPiaggi/EnvironmentFinder/raw/master/environmentfinder/logo-notext.png" width="64" valign="middle" alt="EnviornmentFinder"/> Environment finder
 
 A tool for finding and analyzing atomic environments in crystal structures.
 
