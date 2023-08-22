@@ -4,24 +4,42 @@ A tool for finding and analyzing atomic environments in crystal structures.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4746325.svg)](https://doi.org/10.5281/zenodo.4746325)
 
-## Use the tool online with Binder
+## Instructions
 
-<!-- Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/master?urlpath=apps%2FApp.ipynb) -->
-Launch the tool! [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PabloPiaggi/EnvironmentFinder/voila-test?urlpath=voila%2Frender%2FApp.ipynb)
+### Simple instructions
 
-## Run locally
+On linux, execute the commands:
 
-You can run the app locally with conda and the following commands:
 ```
-git clone https://github.com/PabloPiaggi/EnvironmentFinder EnvironmentFinder
-cd EnvironmentFinder
-conda create --name env_finder python=3.8 anaconda
+pip install environmentfinder
+environmentfinder
+```
+
+Voila! A browser tab should now be open with the environment finder app.
+
+### Installation
+
+The simplest way to install environment finder is to use pip with the command:
+```
+pip install environmentfinder
+```
+
+However, I suggest that you encapsulate the installation using a conda environment, for example:
+
+```
+conda create --name env_finder python=3.8
 conda activate env_finder
-pip install -r requirements.txt
-bash postBuild
-jupyter-notebook App.ipynb
+pip install environmentfinder
 ```
-Once the jupyter notebook opens in your browser, click on "Appmode", and start using the tool.
+
+### Execution
+
+To execute the app just type:
+
+```
+environmentfinder
+```
+and a browser tab should now be open with the environment finder app
 
 ## Purpose
 
@@ -90,7 +108,7 @@ The environments can be downloaded in a zip file.
 ## Acknowledgments
 
 * The app uses several python libraries, for instance [ASE](https://wiki.fysik.dtu.dk/ase/), [NGLVIEW](https://github.com/arose/nglview), and [ipywidgets](https://ipywidgets.readthedocs.io/en/latest/index.html).
-* I am grateful to Giovanni Pizzi and Dou Du for suggesting to deploy the tool using [Binder](https://mybinder.org/)+[appmode](https://github.com/oschuett/appmode).
+* I am grateful to Giovanni Pizzi and Dou Du for suggestions on how to deploy the tool.
 * This tool was developed with support of the Swiss National Science Foundation (SNSF) through an Early Postdoc.Mobility fellowship.
 * I also acknowledge funding from the NCCR MARVEL funded by the SNSF and from the CSI Computational Science Center funded by the Department of Energy of the USA.
 
