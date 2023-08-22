@@ -1,8 +1,7 @@
-notebook==6.2.0
-numpy==1.21.6
-ase==3.20.1
-ipywidgets==7.5.0
-appmode==0.6.0
-tqdm==4.43.0
-nglview==2.7.5
-markdown==3.2.1
+numpy==1.24.2
+ase==3.22.1
+ipywidgets==7.7.5
+voila==0.3.6
+tqdm==4.65.0
+nglview==3.0.3
+markdown==3.4.3

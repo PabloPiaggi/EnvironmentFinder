@@ -1,0 +1,5 @@
+include environmentfinder/logo*.png
+include environmentfinder/examples/*
+include environmentfinder/App.ipynb
+include requirements.txt
+include README.md
