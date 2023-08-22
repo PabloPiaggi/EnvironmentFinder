@@ -347,19 +347,21 @@ class EnvironmentFinder:
 
     def printEnvironmentsToZipFile(self,Environments):
         num_of_templates=Environments.shape[0]
-        os.mkdir("Download")
-        zipObj = ZipFile('Download/download.zip', 'w')
+        download_directory="Download"
+        if not os.path.exists(download_directory):
+            os.mkdir(download_directory)
+        zipObj = ZipFile(download_directory + '/download.zip', 'w')
         for i in range(num_of_templates):
             env_atom_types = np.asarray(self.conf.get_chemical_symbols())[Environments[i].indeces.astype(int)]
             env_positions = Environments[i].delta*10
             env = ase.Atoms(env_atom_types,env_positions)
-            fileName="Download/env" + str(i+1) + ".pdb"
+            fileName=download_directory + "/env" + str(i+1) + ".pdb"
             ase.io.write(fileName, env, format='proteindatabank')
             zipObj.write(fileName)
         zipObj.close()
-        local_file = FileLink('Download/download.zip', result_html_prefix="Click here to download the environments in PDB format: ")
+        local_file = FileLink(download_directory + '/download.zip', result_html_prefix="Click here to download the environments in PDB format: ")
         display(local_file)
-        fileList = glob.glob('Download/env*')
+        fileList = glob.glob(download_directory + '/env*')
         for filePath in fileList:
             os.remove(filePath)
     

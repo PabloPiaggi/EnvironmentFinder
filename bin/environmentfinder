@@ -2,4 +2,4 @@
 
 location=`pip show environmentfinder | grep "Location" | awk '{print $2}'`
 
-voila $location/environmentfinder/App.ipynb
+voila $location/environmentfinder/App.ipynb --VoilaConfiguration.file_whitelist="['.*download.zip']"
