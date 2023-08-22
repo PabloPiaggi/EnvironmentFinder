@@ -19,12 +19,13 @@ Voila! A browser tab should now be open with the environment finder app.
 
 ### Installation
 
-The simplest way to install environment finder is to use pip with the command:
+The simplest way to install environment finder is to use [pip](https://pip.pypa.io/en/stable/) with the command,
 ```
 pip install environmentfinder
 ```
+This will automatically get the source code from [PyPI](https://pypi.org/project/environmentfinder/).
 
-However, I suggest that you encapsulate the installation using a conda environment, for example:
+However, I suggest that you encapsulate the installation using a [conda](https://docs.conda.io/en/latest/) environment, for example,
 
 ```
 conda create --name env_finder python=3.8
@@ -34,7 +35,7 @@ pip install environmentfinder
 
 ### Execution
 
-To execute the app just type:
+To execute the app just type,
 
 ```
 environmentfinder
@@ -56,7 +57,7 @@ The tool can also be used to visualize chemical environments around an atom for 
 * Visualize the environments.
 * Output the environments in Protein Data Bank (pdb) format.
 
-## Instructions
+## Usage
 
 The app has four tabs:
 * Choose configuration
