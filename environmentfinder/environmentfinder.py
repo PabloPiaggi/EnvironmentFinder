@@ -33,8 +33,8 @@ class EnvironmentFinder:
         self.fractionalFlag=False
         # uniqueFlags is True if unique environments are to be calculated
         self.uniqueFlag=True
-        # self.fastFlag is True if the fast algorithm is to be employed
-        self.fastFlag=True
+        # self.verboseFlag is True if verbose mode is on
+        self.verboseFlag=True
         # self.allEnvs stores all calculated environments
         self.allEnvs=np.ndarray((0,),dtype=object)
         # self.uniqueEnvs stores the unique environments
@@ -201,131 +201,20 @@ class EnvironmentFinder:
                 self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
                 self.uniqueEnvs[-1].degeneracy = np.sum(np.ones(num_of_templates)[same_as==i])
 
-    def CalculateUniqueEnvironmentsOld(self):
-        """ Calculate unique Environments
-
-        This algorithm to calculate unique environments compares all possible
-        permutations of the environments. It is thus always correct but often
-        very slow.
-
-        The number of operations scales roughly as as N^2 * M! where
-        N is the total number of environments and M is the number of atoms in
-        the environments.
-
-        CalculateUniqueEnvironmentsFast is a faster alternative to this
-        function.
-
-        Args:
-            none
-
-        Returns:
-            no value
-        """
-
-        num_of_templates=self.allEnvs.shape[0]
-        flag_unique=np.ones(num_of_templates)
-        same_as=np.linspace(0,num_of_templates-1,num_of_templates)
-        # Disregard empty environments
-        for i in range(num_of_templates):
-            if (self.allEnvs[i].indeces.shape[0]==0):
-                flag_unique[i]=0
-        for i in trange(num_of_templates,desc="Environment 1", leave=False):
-            if ( self.allEnvs[i].indeces.shape[0]>0 and flag_unique[i]==1):
-                for j in trange(i+1,num_of_templates,desc="Environment 2", leave=False):
-                    # Not empty,  unique, and same number of neighbors
-                    if ( self.allEnvs[j].indeces.shape[0]>0 and flag_unique[j]==1 and self.allEnvs[i].indeces.shape[0]==self.allEnvs[j].indeces.shape[0]):
-                        # Compare against all permutations
-                        #for perm in tqdm(permutations(np.arange(self.allEnvs[j].indeces.shape[0])),total=np.math.factorial(self.allEnvs[j].indeces.shape[0]),desc="Permutations of environment", leave=None):
-                        for perm in permutations(np.arange(self.allEnvs[j].indeces.shape[0])):
-                            p=np.array(perm)
-                            # If both have the same vectors, then the second environment is not unique
-                            if (np.count_nonzero(np.isclose(self.allEnvs[i].delta,self.allEnvs[j].delta[np.array(p),:],atol=self.tolerance))==self.allEnvs[i].indeces.shape[0]*3 ):
-                                flag_unique[j]=0
-                                same_as[j] = i
-                                break
-        self.uniqueEnvs = np.ndarray((0,),dtype=object)
-        for i in range(num_of_templates):
-            if (flag_unique[i]==1):
-                self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
-                self.uniqueEnvs[-1].degeneracy = np.sum(np.ones(num_of_templates)[same_as==i])
-
-    def CalculateUniqueEnvironmentsFast(self):
-        """ Calculate unique Environments
-
-        This algorithm to calculate unique environments first sorts the
-        distance vectors (central atom to neighbor vectots) and then compares
-        them. The algorithm is fast but it can be wrong in some pathological
-        cases.
-
-        The number of operations scales roughly as as N^2 * M * log(M)
-        where N is the total number of environments and M is the number of
-        atoms in the environments.
-
-        CalculateUniqueEnvironments is a much slower alternative to this
-        function but it is always correct.
-
-        Args:
-            none
-
-        Returns:
-            no value
-        """
-
-        # This is a fast but sometimes wrong algorithm to compare environments
-        num_of_templates=self.allEnvs.shape[0]
-        # Sort according to x+y+z,z,y,x
-        for i in range(num_of_templates):
-            sortindeces=np.argsort(self.allEnvs[i].delta[:,0]+self.allEnvs[i].delta[:,1]+self.allEnvs[i].delta[:,2],kind='stable')
-            self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
-            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
-            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
-            sortindeces=np.argsort(self.allEnvs[i].delta[:,2],kind='stable')
-            self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
-            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
-            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
-            sortindeces=np.argsort(self.allEnvs[i].delta[:,1],kind='stable')
-            self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
-            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
-            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
-            sortindeces=np.argsort(self.allEnvs[i].delta[:,0],kind='stable')
-            self.allEnvs[i].delta = self.allEnvs[i].delta[sortindeces,:]
-            self.allEnvs[i].distance = self.allEnvs[i].distance[sortindeces]
-            self.allEnvs[i].indeces = self.allEnvs[i].indeces[sortindeces]
-        flag_unique=np.ones(num_of_templates)
-        same_as=np.linspace(0,num_of_templates-1,num_of_templates)
-        # Disregard empty environments
-        for i in range(num_of_templates):
-            if (self.allEnvs[i].indeces.shape[0]==0):
-                flag_unique[i]=0
-        for i in range(num_of_templates):
-            # Disregard this environment if it is empty or already not unique
-            if ( self.allEnvs[i].indeces.shape[0]>0 and flag_unique[i]==1):
-                for j in range(i+1,num_of_templates):
-                    # Not empty,  unique, and same number of neighbors
-                    if ( self.allEnvs[j].indeces.shape[0]>0 and flag_unique[j]==1 and self.allEnvs[i].indeces.shape[0]==self.allEnvs[j].indeces.shape[0]):
-                        # If both have the same vectors, then the second environment is not unique
-                        if (np.count_nonzero(np.isclose(self.allEnvs[i].delta,self.allEnvs[j].delta,atol=self.tolerance))==self.allEnvs[i].indeces.shape[0]*3 ):
-                            flag_unique[j]=0
-                            same_as[j] = i
-        self.uniqueEnvs = np.ndarray((0,),dtype=object)
-        for i in range(num_of_templates):
-            if (flag_unique[i]==1):
-                self.uniqueEnvs = np.append(self.uniqueEnvs,self.allEnvs[i])
-                self.uniqueEnvs[-1].degeneracy = np.sum(np.ones(num_of_templates)[same_as==i])
-
     def printEnvironmentSummaryInfo(self,Environments):
-        num_of_templates=Environments.shape[0]
-        if (num_of_templates>0):
-            avg_num_neighbors = 0.0
-            for i in range(num_of_templates):
-                avg_num_neighbors += Environments[i].indeces.shape[0]
-            avg_num_neighbors /= num_of_templates
-        else:
-            avg_num_neighbors = 0
-        print("Found " + str(num_of_templates) + " environments each with " + str(int(avg_num_neighbors))  + " neighbors on average")
-        if (num_of_templates>0):
-            for i in range(num_of_templates):
-                print("Environment " + str(int(i+1)) + ": degeneracy = " + str(int(Environments[i].degeneracy)) + " - number of neighbors = ", str(int(Environments[i].indeces.shape[0])) )
+        if (self.verboseFlag):
+            num_of_templates=Environments.shape[0]
+            if (num_of_templates>0):
+                avg_num_neighbors = 0.0
+                for i in range(num_of_templates):
+                    avg_num_neighbors += Environments[i].indeces.shape[0]
+                avg_num_neighbors /= num_of_templates
+            else:
+                avg_num_neighbors = 0
+            print("Found " + str(num_of_templates) + " environments each with " + str(int(avg_num_neighbors))  + " neighbors on average")
+            if (num_of_templates>0):
+                for i in range(num_of_templates):
+                    print("Environment " + str(int(i+1)) + ": degeneracy = " + str(int(Environments[i].degeneracy)) + " - number of neighbors = ", str(int(Environments[i].indeces.shape[0])) )
 
     def printEnvironments(self,Environments):
         num_of_templates=Environments.shape[0]
@@ -384,8 +273,9 @@ class EnvironmentFinder:
     def chooseEnvPlotUnique(self,number):
         if (self.uniqueEnvs.shape[0]>0):
             self.plotEnv(self.uniqueEnvs[number-1])
-            print("Degeneracy of the environment is " + str(int(self.uniqueEnvs[number-1].degeneracy)) )
-            print("Number of neighbors in the environment is " + str(int(self.uniqueEnvs[number-1].indeces.shape[0])) )
+            if (self.verboseFlag):
+                print("Degeneracy of the environment is " + str(int(self.uniqueEnvs[number-1].degeneracy)) )
+                print("Number of neighbors in the environment is " + str(int(self.uniqueEnvs[number-1].indeces.shape[0])) )
 
     def chooseEnvPlot(self,number):
         if (self.uniqueFlag and self.uniqueEnvs.shape[0]>0):
@@ -405,11 +295,8 @@ class EnvironmentFinder:
         if (atom_type_2=="Any"):
             listb=np.linspace(0,chemical_symbols.shape[0]-1,chemical_symbols.shape[0]).astype(int)
         self.calculateEnvironments(lista,listb,cutoff)
-        if (self.uniqueFlag and not(self.fastFlag)):
+        if (self.uniqueFlag):
             self.CalculateUniqueEnvironments()
-            self.printEnvironmentSummaryInfo(self.uniqueEnvs)
-        elif (self.uniqueFlag and self.fastFlag):
-            self.CalculateUniqueEnvironmentsFast()
             self.printEnvironmentSummaryInfo(self.uniqueEnvs)
         else:
             self.printEnvironmentSummaryInfo(self.globalTemplate)
@@ -419,11 +306,8 @@ class EnvironmentFinder:
         lista=np.fromstring(listastring, dtype=int, sep=',')-1
         listb=np.fromstring(listbstring, dtype=int, sep=',')-1
         self.calculateEnvironments(lista,listb,cutoff)
-        if (self.uniqueFlag and not(self.fastFlag)):
+        if (self.uniqueFlag):
             self.CalculateUniqueEnvironments()
-            self.printEnvironmentSummaryInfo(self.uniqueEnvs)
-        elif (self.uniqueFlag and self.fastFlag):
-            self.CalculateUniqueEnvironmentsFast()
             self.printEnvironmentSummaryInfo(self.uniqueEnvs)
         else:
             self.printEnvironmentSummaryInfo(self.allEnvs)
@@ -433,11 +317,8 @@ class EnvironmentFinder:
         lista=np.arange(int(mina),int(maxa)+1,int(stridea))-1
         listb=np.arange(int(minb),int(maxb)+1,int(strideb))-1
         self.calculateEnvironments(lista,listb,cutoff)
-        if (self.uniqueFlag and not(self.fastFlag)):
+        if (self.uniqueFlag):
             self.CalculateUniqueEnvironments()
-            self.printEnvironmentSummaryInfo(self.uniqueEnvs)
-        elif (self.uniqueFlag and self.fastFlag):
-            self.CalculateUniqueEnvironmentsFast()
             self.printEnvironmentSummaryInfo(self.uniqueEnvs)
         else:
             self.printEnvironmentSummaryInfo(self.allEnvs)
