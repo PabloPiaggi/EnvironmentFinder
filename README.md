@@ -3,7 +3,7 @@
 A tool for finding and analyzing atomic environments in crystal structures.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4746325.svg)](https://doi.org/10.5281/zenodo.4746325)
-https://github.com/PabloPiaggi/EnvironmentFinder/actions/workflows/python-package.yml/badge.svg
+![example workflow](https://github.com/PabloPiaggi/EnvironmentFinder/actions/workflows/python-package.yml/badge.svg)
 
 ## Instructions
 
