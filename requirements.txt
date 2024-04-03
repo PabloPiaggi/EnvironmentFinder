@@ -1,7 +1,7 @@
 numpy==1.24.2
 ase==3.22.1
 ipywidgets==7.7.5
-voila==0.3.6
+voila==0.3.8
 tqdm==4.65.0
 nglview==3.0.3
 markdown==3.4.3
