@@ -10,7 +10,7 @@ with open(TOP_DIR.joinpath("README.md")) as fd:
     long_description = fd.read()
 
 setup(name='environmentfinder',
-      version='1.1.4',
+      version='1.1.5',
       description='Tool for finding atomic environments in crystal structures',
       long_description=long_description,
       long_description_content_type='text/markdown',
