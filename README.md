@@ -7,6 +7,8 @@ A tool for finding and analyzing atomic environments in crystal structures.
 
 ## Instructions
 
+We recommend using Google Chrome. This software has not been tested on other browsers.
+
 ### Simple instructions
 
 On linux, execute the commands:
